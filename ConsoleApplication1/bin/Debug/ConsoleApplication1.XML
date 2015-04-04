@@ -2,15 +2,64 @@
 <doc>
 <assembly><name>ConsoleApplication1</name></assembly>
 <members>
+<member name="P:File1.image_counter">
+<summary>
+ Image counter
+</summary>
+</member>
+<member name="P:File1.random_list_for_images">
+<summary>
+ Generate random list for images.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="P:File1.images">
+<summary>
+ Imaged loaded from specified folder. Only finds images with format JPEG(.jpg)
+</summary>
+</member>
+<member name="M:File1.random_list_gen(System.Int32,Microsoft.FSharp.Collections.FSharpList{System.Int32})">
+<summary>
+ Random list generator - Generates list of random numbers, 0 to (num-1), no duplicates.
+</summary>
+</member>
 <member name="M:File1.form_control_adder(System.Windows.Forms.Form,Microsoft.FSharp.Collections.FSharpList{System.Windows.Forms.Control})">
 <summary>
  Form control adder.
 </summary>
 </member>
+<member name="P:File1.textbox_answer">
+<summary>
+ Text boxes - Must include : Text, Width, Height, Location, Font
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="P:File1.button_close">
 <summary>
  Buttons - Must include : Text, Width, Height, Location, Font
 </summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
 </member>
 <member name="">
 
@@ -45,10 +94,29 @@
 <member name="T:File1">
 
 </member>
+<member name="M:Image_functions.remove_image_in_form(System.Windows.Forms.Form)">
+<summary>
+ remove_image_in_form : given form, find controls that have name of &quot;image_box&quot;(added to controls at show_image_in_form function) and remove them all. Return given form with image_boxes removed.
+</summary>
+</member>
+<member name="M:Image_functions.show_image_in_form(System.Drawing.Point,System.Int32,System.Int32,System.Drawing.Image,System.Windows.Forms.Form)">
+<summary>
+ show_image_in_form : given center point that image to be displayed, boundary(in width, height), img, form, this function will return form that given image is displayed.
+</summary>
+</member>
 <member name="">
 
 </member>
-<member name="T:File2">
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Image_functions">
 
 </member>
 </members>
