@@ -1,0 +1,9 @@
+D:\3학년_1학기\Oriental_Art_and_Civilizations_001\Exam_Program\ConsoleApplication1\obj\Debug\ConsoleApplication1.fsprojResolveAssemblyReference.cache
+D:\3학년_1학기\Oriental_Art_and_Civilizations_001\Exam_Program\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe.config
+D:\3학년_1학기\Oriental_Art_and_Civilizations_001\Exam_Program\ConsoleApplication1\bin\Debug\ConsoleApplication1.XML
+D:\3학년_1학기\Oriental_Art_and_Civilizations_001\Exam_Program\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
+D:\3학년_1학기\Oriental_Art_and_Civilizations_001\Exam_Program\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
+D:\3학년_1학기\Oriental_Art_and_Civilizations_001\Exam_Program\ConsoleApplication1\bin\Debug\FSharp.Core.dll
+D:\3학년_1학기\Oriental_Art_and_Civilizations_001\Exam_Program\ConsoleApplication1\bin\Debug\FSharp.Core.xml
+D:\3학년_1학기\Oriental_Art_and_Civilizations_001\Exam_Program\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
+D:\3학년_1학기\Oriental_Art_and_Civilizations_001\Exam_Program\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb

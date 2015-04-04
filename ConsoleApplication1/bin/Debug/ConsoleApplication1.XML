@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>ConsoleApplication1</name></assembly>
+<members>
+<member name="M:File1.form_control_adder(System.Windows.Forms.Form,Microsoft.FSharp.Collections.FSharpList{System.Windows.Forms.Control})">
+<summary>
+ Form control adder.
+</summary>
+</member>
+<member name="P:File1.button_close">
+<summary>
+ Buttons - Must include : Text, Width, Height, Location, Font
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:File1.label_image">
+<summary>
+ Labels - Must include : Text, Width, Height, 
+</summary>
+</member>
+<member name="P:File1.form_slide_test">
+<summary>
+ Forms for slide_test, test_selections. - Must include : Text, Width, Height, StartPosition, AutoScaleMode, FormBorderStyle
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:File1.font_title">
+<summary>
+ Fonts. - Must include : font name, font size, FontStyle, GraphicsUnit
+</summary>
+</member>
+<member name="T:File1">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:File2">
+
+</member>
+</members>
+</doc>
