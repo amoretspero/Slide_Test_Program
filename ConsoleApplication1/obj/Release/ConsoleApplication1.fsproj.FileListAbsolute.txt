@@ -1,0 +1,9 @@
+D:\3학년_1학기_HW\Oriental_Arts_and_Civilizations_001\Slide_Test_Program\ConsoleApplication1\bin\Release\ConsoleApplication1.exe.config
+D:\3학년_1학기_HW\Oriental_Arts_and_Civilizations_001\Slide_Test_Program\ConsoleApplication1\bin\Release\ConsoleApplication1.XML
+D:\3학년_1학기_HW\Oriental_Arts_and_Civilizations_001\Slide_Test_Program\ConsoleApplication1\bin\Release\ConsoleApplication1.exe
+D:\3학년_1학기_HW\Oriental_Arts_and_Civilizations_001\Slide_Test_Program\ConsoleApplication1\bin\Release\ConsoleApplication1.pdb
+D:\3학년_1학기_HW\Oriental_Arts_and_Civilizations_001\Slide_Test_Program\ConsoleApplication1\bin\Release\FSharp.Core.dll
+D:\3학년_1학기_HW\Oriental_Arts_and_Civilizations_001\Slide_Test_Program\ConsoleApplication1\bin\Release\FSharp.Core.xml
+D:\3학년_1학기_HW\Oriental_Arts_and_Civilizations_001\Slide_Test_Program\ConsoleApplication1\bin\Release\ko\FSharp.Core.resources.dll
+D:\3학년_1학기_HW\Oriental_Arts_and_Civilizations_001\Slide_Test_Program\ConsoleApplication1\obj\Release\ConsoleApplication1.exe
+D:\3학년_1학기_HW\Oriental_Arts_and_Civilizations_001\Slide_Test_Program\ConsoleApplication1\obj\Release\ConsoleApplication1.pdb

@@ -55,8 +55,12 @@ let rec image_loader () =
         //let files = img_dir.GetFiles("*.jpg")
         let images = ref ([] : Image list)
         for i=0 to cnt-1 do
-            let img = img_dir.GetFiles((i+1).ToString()+".jpg")
-            let fullname = img.[0].FullName
+            let img = ref ([| |] : FileInfo array)
+            if (img_dir.GetFiles((i+1).ToString()+".jpg").Length <> 0) then
+                img.Value <- img_dir.GetFiles((i+1).ToString()+".jpg")
+            else
+                img.Value <- img_dir.GetFiles((i+1).ToString()+"_one.jpg")
+            let fullname = img.Value.[0].FullName
             let image = Image.FromFile(fullname)
             images.Value <- (List.append images.Value [image])
         images.Value

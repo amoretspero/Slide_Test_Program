@@ -29,7 +29,7 @@ let label_slide_time = new Label(Text = "시기 : ", Width = 60, Height = 20, Lo
 let label_slide_founded_place = new Label(Text = "출토 지역 : ", Width = 90, Height = 20, Location = new Point(750, 650), Font = font_label)
 let label_slide_artist = new Label(Text = "작가 : ", Width = 60, Height = 20, Location = new Point(970, 650), Font = font_label)
 let label_correctness = new Label(Text = "Correctness : ", Width = 100, Height = 20, Location = new Point(400, 600), Font = font_label)
-let label_correctness_answer = new Label(Text = "N\A", Width = 100, Height = 20, Location = new Point(500, 600), Font = font_label)
+let label_correctness_answer = new Label(Text = "N/A", Width = 100, Height = 20, Location = new Point(500, 600), Font = font_label)
 let label_correctanswer = new Label(Text = "Correct Answer :", Width = 160, Height = 20, Location = new Point(480, 600), Font = font_label)
 let label_correctanswer_answer = new Label(Text = "N/A", Width = 100, Height = 20, Location = new Point(650, 600), Font = font_text)
 
@@ -38,17 +38,18 @@ let label_correctanswer_answer = new Label(Text = "N/A", Width = 100, Height = 2
 let button_close = new Button(Text = "Close", Width = 70, Height = 25, Location = new Point(950, 25), Font = font_label)
 let button_next_image = new Button(Text = "Next Image", Width = 120, Height = 25, Location = new Point(620, 550), Font = font_label, Enabled = false)
 let button_previous_image = new Button(Text = "Prev Image", Width = 120, Height = 25, Location = new Point(480, 550), Font = font_label, Enabled = false)
-let button_answer_submit = new Button(Text = "Submit", Width = 80, Height = 25, Location = new Point(1000, 600), Font = font_label)
+let button_answer_submit = new Button(Text = "Submit", Width = 80, Height = 25, Location = new Point(1000, 600), Font = font_label, Enabled = false)
 let button_reset_random_list = new Button(Text = "Random Order Reset", Width = 170, Height = 25, Location = new Point(1050, 25), Font = font_label)
 let button_start = new Button(Text = "Test Start", Width = 120, Height = 25, Location = new Point(800, 25), Font = font_label)
 let button_show_answer = new Button(Text = "정답 보기", Width = 120, Height = 25, Location = new Point(60, 540), Font = font_label, Enabled = false)
+let button_hide_answer = new Button(Text = "정답 가리기", Width = 120, Height = 25, Location = new Point(60, 570), Font = font_label, Enabled = false)
 
 /// Text boxes - Must include : Text, Width, Height, Location, Font
-let textbox_answer_name = new TextBox(Text = "", Width = 120, Height = 25, Location = new Point(180, 645), Font = font_text)
-let textbox_answer_founded_monument = new TextBox(Text = "", Width = 120, Height = 25, Location = new Point(410, 645), Font = font_text)
-let textbox_answer_time = new TextBox(Text = "", Width = 120, Height = 25, Location = new Point(610, 645), Font = font_text)
-let textbox_answer_founded_place = new TextBox(Text = "", Width = 120, Height = 25, Location = new Point(840, 645), Font = font_text)
-let textbox_answer_artist = new TextBox(Text = "", Width = 120, Height = 25, Location = new Point(1030, 645), Font = font_text)
+let textbox_answer_name = new TextBox(Text = "", Width = 120, Height = 25, Location = new Point(180, 645), Font = font_text, Enabled = false)
+let textbox_answer_founded_monument = new TextBox(Text = "", Width = 120, Height = 25, Location = new Point(410, 645), Font = font_text, Enabled = false)
+let textbox_answer_time = new TextBox(Text = "", Width = 120, Height = 25, Location = new Point(610, 645), Font = font_text, Enabled = false)
+let textbox_answer_founded_place = new TextBox(Text = "", Width = 120, Height = 25, Location = new Point(840, 645), Font = font_text, Enabled = false)
+let textbox_answer_artist = new TextBox(Text = "", Width = 120, Height = 25, Location = new Point(1030, 645), Font = font_text, Enabled = false)
 let textbox_answer_total = new RichTextBox(Text = "", Width = 240, Height = 480, Location = new Point(20, 40), Font = font_text, BorderStyle = BorderStyle.FixedSingle)
 
 
@@ -93,6 +94,7 @@ button_close.Click.Add(fun _ ->
     form_slide_test.Close())
 
 button_start.Click.Add(fun _ ->
+    textbox_answer_total.Text <- ""
     if (image_counter = 0) then
         let image_num = random_list_for_images.Value.[0]
         (show_image_in_form (new Point(640, 300)) 640 480 (images.ElementAt(image_num)) form_slide_test) |> ignore
@@ -100,26 +102,20 @@ button_start.Click.Add(fun _ ->
         button_previous_image.Enabled <- true
         button_previous_image.PerformClick()
         button_show_answer.Enabled <- true
+        button_hide_answer.Enabled <- true
         image_number <- image_num
-        (*if ((image_num) >= answers.Length) then
-            textbox_answer_total.Text <- "정답의 갯수와 이미지의 갯수가 일치하지 않습니다."
-        else
-            textbox_answer_total.Text <- answers.[image_num]*)
     else
         image_counter <- 0
         button_start.PerformClick())
 
 button_next_image.Click.Add(fun _ ->
     image_counter <- image_counter + 1
+    textbox_answer_total.Text <- ""
     if (image_counter < images_count) then
         let image_num = random_list_for_images.Value.[image_counter]
         (remove_image_in_form form_slide_test) |> ignore
         (show_image_in_form (new Point(640, 300)) 640 480 (images.ElementAt(image_num)) form_slide_test) |> ignore
         image_number <- image_num
-        (*if ((image_num) >= answers.Length) then
-            textbox_answer_total.Text <- "정답의 갯수와 이미지의 갯수가 일치하지 않습니다."
-        else
-            textbox_answer_total.Text <- answers.[image_num]*)
     if (image_counter = images_count-1) then
         button_next_image.Enabled <- false
     if ((image_counter < images_count - 1) && (button_next_image.Enabled = false)) then
@@ -129,15 +125,12 @@ button_next_image.Click.Add(fun _ ->
 
 button_previous_image.Click.Add(fun _ ->
     image_counter <- image_counter - 1
+    textbox_answer_total.Text <- ""
     if (image_counter >= 0) then
         let image_num = random_list_for_images.Value.[image_counter]
         (remove_image_in_form form_slide_test) |> ignore
         (show_image_in_form (new Point(640, 300)) 640 480 (images.ElementAt(image_num)) form_slide_test) |> ignore
         image_number <- image_num
-        (*if ((image_num) >= answers.Length) then
-            textbox_answer_total.Text <- "정답의 갯수와 이미지의 갯수가 일치하지 않습니다."
-        else
-            textbox_answer_total.Text <- answers.[image_num]*)
     else
         image_counter <- 0
     if (image_counter = 0) then
@@ -148,11 +141,14 @@ button_previous_image.Click.Add(fun _ ->
         button_next_image.Enabled <- true)
 
 button_reset_random_list.Click.Add(fun _ ->
+    textbox_answer_total.Text <- ""
     random_list_for_images.Value <- (random_list_gen images_count [])
     (remove_image_in_form form_slide_test) |> ignore
     image_counter <- 0
     button_next_image.Enabled <- false
-    button_previous_image.Enabled <- false)
+    button_previous_image.Enabled <- false
+    button_show_answer.Enabled <- false
+    button_hide_answer.Enabled <- false)
 
 button_show_answer.Click.Add(fun _ ->
     if (image_counter >= answers.Length) then
@@ -160,12 +156,15 @@ button_show_answer.Click.Add(fun _ ->
     else
         textbox_answer_total.Text <- answers.[image_number])
 
+button_hide_answer.Click.Add(fun _ ->
+    textbox_answer_total.Text <- "")
+
 
 
 /// Add controls to form.
 (form_control_adder form_slide_test [label_image; label_answer; label_slide_name; label_slide_founded_monument; label_slide_time; label_slide_founded_place; label_slide_artist;
                                     label_correctness; label_correctness_answer; label_correctanswer; label_correctanswer_answer]) |> ignore
-(form_control_adder form_slide_test [button_close; button_next_image; button_previous_image; button_answer_submit; button_reset_random_list; button_start; button_show_answer]) |> ignore
+(form_control_adder form_slide_test [button_close; button_next_image; button_previous_image; button_answer_submit; button_reset_random_list; button_start; button_show_answer; button_hide_answer]) |> ignore
 (form_control_adder form_slide_test [textbox_answer_name; textbox_answer_founded_monument; textbox_answer_time; textbox_answer_founded_place; textbox_answer_artist; textbox_answer_total]) |> ignore
 
 //let counter_test = image_counter()
