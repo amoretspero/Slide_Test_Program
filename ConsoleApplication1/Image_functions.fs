@@ -49,14 +49,16 @@ let rec image_counter () =
 
 let rec image_loader () =
     let img_dir = new DirectoryInfo(@"..\..\..\images")
+    let img_cnt = image_counter()
     if img_dir.Exists then
         let cnt = img_dir.GetFiles("*.jpg").Length
-        let files = img_dir.GetFiles("*.jpg")
+        //let files = img_dir.GetFiles("*.jpg")
         let images = ref ([] : Image list)
-        for elem in files do
-            let fullname = elem.FullName
+        for i=0 to cnt-1 do
+            let img = img_dir.GetFiles((i+1).ToString()+".jpg")
+            let fullname = img.[0].FullName
             let image = Image.FromFile(fullname)
-            images.Value <- images.Value |> List.append([image])
+            images.Value <- (List.append images.Value [image])
         images.Value
     else
         raise DIR_NOT_EXIST

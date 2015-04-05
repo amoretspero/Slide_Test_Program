@@ -2,6 +2,14 @@
 <doc>
 <assembly><name>ConsoleApplication1</name></assembly>
 <members>
+<member name="P:File1.answers">
+<summary>
+ Get answers in form of list.
+</summary>
+</member>
+<member name="">
+
+</member>
 <member name="P:File1.image_counter">
 <summary>
  Image counter
@@ -30,10 +38,28 @@
  Form control adder.
 </summary>
 </member>
-<member name="P:File1.textbox_answer">
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:File1.textbox_answer_name">
 <summary>
  Text boxes - Must include : Text, Width, Height, Location, Font
 </summary>
+</member>
+<member name="">
+
 </member>
 <member name="">
 
@@ -54,6 +80,21 @@
 <summary>
  Buttons - Must include : Text, Width, Height, Location, Font
 </summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
 </member>
 <member name="">
 
@@ -117,6 +158,14 @@
 
 </member>
 <member name="T:Image_functions">
+
+</member>
+<member name="M:Text_functions.text_to_list">
+<summary>
+ text_to_list function reads answers from specified file and returns answers in list form.
+</summary>
+</member>
+<member name="T:Text_functions">
 
 </member>
 </members>
