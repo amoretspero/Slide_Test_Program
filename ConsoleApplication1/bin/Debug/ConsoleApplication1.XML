@@ -53,6 +53,12 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="P:File1.textbox_answer_name">
 <summary>
  Text boxes - Must include : Text, Width, Height, Location, Font
@@ -79,10 +85,22 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
 <member name="P:File1.button_close">
 <summary>
  Buttons - Must include : Text, Width, Height, Location, Font
 </summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
 </member>
 <member name="">
 
