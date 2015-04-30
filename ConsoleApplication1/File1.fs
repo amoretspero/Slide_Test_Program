@@ -101,6 +101,31 @@ let answers = text_to_list()
 button_close.Click.Add(fun _ ->
     form_slide_test.Close())
 
+/// Setting KeyPreview option of form to catch key press events before they are sent to focused controls.
+form_slide_test.KeyPreview <- true
+
+/// Key pressing combinations. Ctrl + -> : next image, Ctrl + <- : prev image, Ctrl + S : Start, Shift + Esc : Close, Ctrl + Enter : Show answer, Ctrl + Backspace : Hide answer.
+form_slide_test.KeyDown.Add(fun e ->
+    if e.Control = true && e.KeyCode = Keys.Right then 
+        System.Console.Write("Ctrl + ->(right arrow) Key(s) are pressed!\n")
+        button_next_image.PerformClick()
+    if e.Control = true && e.KeyCode = Keys.Left then
+        System.Console.Write("Ctrl + <-(left arrow) Key(s) are pressed!\n")
+        button_previous_image.PerformClick()
+    if e.Control = true && e.KeyCode = Keys.S then
+        System.Console.Write("Ctrl + S Key(s) are pressed!\n")
+        button_start.PerformClick()
+    if e.Shift = true && e.KeyCode = Keys.Escape then
+        System.Console.Write("Shift + Esc Key(s) are pressed!\n")
+        button_close.PerformClick()
+    if e.Control = true && e.KeyCode = Keys.Enter then
+        System.Console.Write ("Ctrl + Enter Key(s) are pressed!\n")
+        button_show_answer.PerformClick()
+    if e.Control = true && e.KeyCode = Keys.Back then
+        System.Console.Write ("Ctrl + Backspace Key(s) are pressed!\n")
+        button_hide_answer.PerformClick()
+        )
+
 button_start.Click.Add(fun _ ->
     textbox_answer_total.Text <- ""
     if (image_counter = 0) then
