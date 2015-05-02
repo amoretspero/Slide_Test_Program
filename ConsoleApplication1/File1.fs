@@ -12,6 +12,7 @@ open System.Windows.Input
 
 open Image_functions
 open Text_functions
+open List_functions
 
 /// Fonts. - Must include : font name, font size, FontStyle, GraphicsUnit
 let font_title = new Font("나눔손글씨 펜", 14.0f, FontStyle.Regular, GraphicsUnit.Point)
@@ -34,6 +35,7 @@ let label_correctness_answer = new Label(Text = "N/A", Width = 100, Height = 20,
 let label_correctanswer = new Label(Text = "Correct Answer :", Width = 160, Height = 20, Location = new Point(480, 600), Font = font_label)
 let label_correctanswer_answer = new Label(Text = "N/A", Width = 100, Height = 20, Location = new Point(650, 600), Font = font_text)
 let label_show_answer_always = new Label(Text = "항상 정답 보이기", Width = 120, Height = 20, Location = new Point(1050, 100), Font = font_text)
+let label_show_help = new Label(Text = "도움말 보이기", Width = 120, Height = 20, Location = new Point(1050, 122), Font = font_text)
 let label_remaining_slide = new Label(Text = "현재 그림 번호 : ", Width = 120, Height = 20, Location = new Point(1025, 150), Font = font_text)
 let label_remaining_slide_count = new Label(Text = "N/A", Width = 100, Height = 20, Location = new Point(1150, 150), Font = font_text)
 
@@ -55,12 +57,24 @@ let textbox_answer_founded_monument = new TextBox(Text = "", Width = 120, Height
 let textbox_answer_time = new TextBox(Text = "", Width = 120, Height = 25, Location = new Point(610, 645), Font = font_text, Enabled = false)
 let textbox_answer_founded_place = new TextBox(Text = "", Width = 120, Height = 25, Location = new Point(840, 645), Font = font_text, Enabled = false)
 let textbox_answer_artist = new TextBox(Text = "", Width = 120, Height = 25, Location = new Point(1030, 645), Font = font_text, Enabled = false)
-let textbox_answer_total = new RichTextBox(Text = "", Width = 240, Height = 480, Location = new Point(20, 40), Font = font_text, BorderStyle = BorderStyle.FixedSingle)
+let textbox_answer_total = new RichTextBox(Text = "", Width = 240, Height = 480, Location = new Point(20, 40), Font = font_text, BorderStyle = BorderStyle.FixedSingle, Enabled = true)
 
+/// Check boxes - Must include : Location
 let checkbox_show_answer_always = new CheckBox(Location = new Point(1175, 100))
+let checkbox_show_help = new CheckBox(Location = new Point(1175, 120), Checked = true)
 
+/// Help - 1. Key operations, 2. Random list Gen, 3. Mail to
+let textbox_help = new RichTextBox(Text = "", Width = 240, Height = 480, Location = new Point(1000, 180), Font = font_text, BorderStyle = BorderStyle.None, Enabled = true)
+
+/// Represents whether random list is enabled or disabled.
 let mutable unset_random = false
 
+/// Sets help message.
+let help_message1 = "1.키 조작 방법\n"+"Ctrl + S : 테스트 시작\n"+"Shift + Esc : 프로그램 종료\n"+"Ctrl + (-> or L) : 다음 이미지\n"+"Ctrl + (<- or J) : 이전 이미지\n"+"Ctrl + I : 정답 보기\n"+"Ctrl + J : 정답 가리기\n"+"Ctrl + R : 순서 다시 섞기\n"+"Ctrl + U : 순서 섞기 해제\n\n"
+let help_message2 = "2. 순서 섞기\n"+"순서는 프로그램 실행 시\n임의로 생성됩니다.\n"+"다시 섞고 싶다면\n'Random Order Reset' 버튼을,\n"+"순서를 섞고 싶지 않다면\n'Unset Random' 버튼을 클릭합니다.\n\n"
+let help_message3 = "3. 버그 신고, 개선사항 건의\n"+"amoretspero@snu.ac.kr"
+let help_message = help_message1+help_message2+help_message3
+textbox_help.Text <- help_message
 
 /// Form control adder.
 let rec form_control_adder (f : Form) (lst : Control list) =
@@ -70,25 +84,20 @@ let rec form_control_adder (f : Form) (lst : Control list) =
         f.Controls.Add(h)
         (form_control_adder f t)
 
-/// Random list generator - Generates list of random numbers, 0 to (num-1), no duplicates.
-let rec random_list_gen (num : int) (lst : int list) =
+/// Form control remover.
+let rec form_control_remover (f : Form) (lst : Control list) =
     match lst with
-    [] -> (random_list_gen num [ (Random().Next())%num ])
+    [] -> f
     | h :: t ->
-        if (lst.Length <> num) then
-            let mutable temp = (Random().Next())%num
-            while (lst.Contains(temp)) do
-                temp <- (Random().Next())%num
-            (random_list_gen num (List.append lst [temp]))
-        else
-            lst
+        f.Controls.Remove(h)
+        (form_control_remover f t)
 
 /// Imaged loaded from specified folder. Only finds images with format JPEG(.jpg)
 let images = image_loader()
 let images_count = image_counter()
 
 /// Generate random list for images.
-let random_list_for_images = ref (random_list_gen images_count [])
+let random_list_for_images = ref (random_list_gen images_count [] [0 .. (images_count - 1)])
 
 /// Image counter
 let mutable image_counter = 0
@@ -104,12 +113,12 @@ button_close.Click.Add(fun _ ->
 /// Setting KeyPreview option of form to catch key press events before they are sent to focused controls.
 form_slide_test.KeyPreview <- true
 
-/// Key pressing combinations. Ctrl + -> : next image, Ctrl + <- : prev image, Ctrl + S : Start, Shift + Esc : Close, Ctrl + Enter : Show answer, Ctrl + Backspace : Hide answer.
+/// Key pressing combinations. Ctrl + (-> or L) : next image, Ctrl + (<- or J) : prev image, Ctrl + S : Start, Shift + Esc : Close, Ctrl + I : Show answer, Ctrl + J : Hide answer.
 form_slide_test.KeyDown.Add(fun e ->
-    if e.Control = true && e.KeyCode = Keys.Right then 
+    if e.Control = true && (e.KeyCode = Keys.Right || e.KeyCode = Keys.L) then 
         System.Console.Write("Ctrl + ->(right arrow) Key(s) are pressed!\n")
         button_next_image.PerformClick()
-    if e.Control = true && e.KeyCode = Keys.Left then
+    if e.Control = true && (e.KeyCode = Keys.Left || e.KeyCode = Keys.J) then
         System.Console.Write("Ctrl + <-(left arrow) Key(s) are pressed!\n")
         button_previous_image.PerformClick()
     if e.Control = true && e.KeyCode = Keys.S then
@@ -118,12 +127,18 @@ form_slide_test.KeyDown.Add(fun e ->
     if e.Shift = true && e.KeyCode = Keys.Escape then
         System.Console.Write("Shift + Esc Key(s) are pressed!\n")
         button_close.PerformClick()
-    if e.Control = true && e.KeyCode = Keys.Enter then
+    if e.Control = true && e.KeyCode = Keys.I then
         System.Console.Write ("Ctrl + Enter Key(s) are pressed!\n")
         button_show_answer.PerformClick()
-    if e.Control = true && e.KeyCode = Keys.Back then
+    if e.Control = true && e.KeyCode = Keys.K then
         System.Console.Write ("Ctrl + Backspace Key(s) are pressed!\n")
         button_hide_answer.PerformClick()
+    if e.Control = true && e.KeyCode = Keys.R then
+        System.Console.Write ("Ctrl + R Key(s) are pressed!\n")
+        button_reset_random_list.PerformClick()
+    if e.Control = true && e.KeyCode = Keys.U then
+        System.Console.Write ("Ctrl + U Key(s) are pressed!\n")
+        button_unset_random.PerformClick()
         )
 
 button_start.Click.Add(fun _ ->
@@ -184,7 +199,7 @@ button_previous_image.Click.Add(fun _ ->
 
 button_reset_random_list.Click.Add(fun _ ->
     textbox_answer_total.Text <- ""
-    random_list_for_images.Value <- (random_list_gen images_count [])
+    random_list_for_images.Value <- (random_list_gen images_count [] [0 .. (images_count - 1)])
     (remove_image_in_form form_slide_test) |> ignore
     image_counter <- 0
     button_next_image.Enabled <- false
@@ -213,6 +228,13 @@ button_show_answer.Click.Add(fun _ ->
 button_hide_answer.Click.Add(fun _ ->
     textbox_answer_total.Text <- "")
 
+checkbox_show_help.Click.Add(fun _ ->
+    if (checkbox_show_help.Checked = false) then
+        (form_control_remover form_slide_test [textbox_help]) |> ignore
+    else
+        (form_control_adder form_slide_test [textbox_help]) |> ignore
+    )
+
 form_slide_test.KeyDown.Add(fun arg ->
     if (arg.KeyCode = System.Windows.Forms.Keys.Enter) then
         button_next_image.PerformClick()
@@ -222,13 +244,12 @@ form_slide_test.KeyDown.Add(fun arg ->
 
 
 /// Add controls to form.
-(form_control_adder form_slide_test [label_image; (*label_answer; label_slide_name; label_slide_founded_monument; label_slide_time; label_slide_founded_place; label_slide_artist;*)
-                                    (*label_correctness; label_correctness_answer; label_correctanswer; label_correctanswer_answer;*) label_show_answer_always;
+(form_control_adder form_slide_test [label_image; label_show_answer_always; label_show_help;
                                     label_remaining_slide; label_remaining_slide_count]) |> ignore
-(form_control_adder form_slide_test [button_close; button_next_image; button_previous_image; button_answer_submit; button_reset_random_list; button_start; button_show_answer; button_hide_answer;
+(form_control_adder form_slide_test [button_close; button_next_image; button_previous_image; button_reset_random_list; button_start; button_show_answer; button_hide_answer;
                                     button_unset_random]) |> ignore
-(form_control_adder form_slide_test [(*textbox_answer_name; textbox_answer_founded_monument; textbox_answer_time; textbox_answer_founded_place; textbox_answer_artist;*) textbox_answer_total]) |> ignore
-(form_control_adder form_slide_test [checkbox_show_answer_always]) |> ignore
+(form_control_adder form_slide_test [textbox_answer_total; textbox_help]) |> ignore
+(form_control_adder form_slide_test [checkbox_show_answer_always; checkbox_show_help]) |> ignore
 
 //let counter_test = image_counter()
 //let image_reader_test = (image_loader()).Count()

@@ -28,9 +28,9 @@
  Imaged loaded from specified folder. Only finds images with format JPEG(.jpg)
 </summary>
 </member>
-<member name="M:File1.random_list_gen(System.Int32,Microsoft.FSharp.Collections.FSharpList{System.Int32})">
+<member name="M:File1.form_control_remover(System.Windows.Forms.Form,Microsoft.FSharp.Collections.FSharpList{System.Windows.Forms.Control})">
 <summary>
- Random list generator - Generates list of random numbers, 0 to (num-1), no duplicates.
+ Form control remover.
 </summary>
 </member>
 <member name="M:File1.form_control_adder(System.Windows.Forms.Form,Microsoft.FSharp.Collections.FSharpList{System.Windows.Forms.Control})">
@@ -43,6 +43,32 @@
 </member>
 <member name="">
 
+</member>
+<member name="">
+
+</member>
+<member name="P:File1.help_message1">
+<summary>
+ Sets help message.
+</summary>
+</member>
+<member name="P:File1.unset_random">
+<summary>
+ Represents whether random list is enabled or disabled.
+</summary>
+</member>
+<member name="P:File1.textbox_help">
+<summary>
+ Help - 1. Key operations, 2. Random list Gen, 3. Mail to
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="P:File1.checkbox_show_answer_always">
+<summary>
+ Check boxes - Must include : Location
+</summary>
 </member>
 <member name="">
 
@@ -132,6 +158,9 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
 <member name="P:File1.label_image">
 <summary>
  Labels - Must include : Text, Width, Height, 
@@ -179,6 +208,14 @@
 
 </member>
 <member name="T:Image_functions">
+
+</member>
+<member name="M:List_functions.random_list_gen(System.Int32,Microsoft.FSharp.Collections.FSharpList{System.Int32},Microsoft.FSharp.Collections.FSharpList{System.Int32})">
+<summary>
+ Random list generator - Generates list of random numbers, 0 to (num-1), no duplicates.
+</summary>
+</member>
+<member name="T:List_functions">
 
 </member>
 <member name="M:Text_functions.text_to_list">
