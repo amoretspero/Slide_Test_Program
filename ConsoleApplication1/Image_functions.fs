@@ -41,14 +41,19 @@ let image_resizer (img : Image) (size : Size) (preserveAspectRatio : bool) =
 
 let rec image_counter () =
     let img_dir = new DirectoryInfo(@"..\..\..\images")
+    let img_dir_release = new DirectoryInfo(@".\Images")
     if img_dir.Exists then
         let cnt = img_dir.GetFiles("*.jpg").Length
+        cnt
+    else if img_dir_release.Exists then
+        let cnt = img_dir_release.GetFiles("*.jpg").Length
         cnt
     else
         -1
 
 let rec image_loader () =
     let img_dir = new DirectoryInfo(@"..\..\..\images")
+    let img_dir_release = new DirectoryInfo(@".\Images")
     let img_cnt = image_counter()
     if img_dir.Exists then
         let cnt = img_dir.GetFiles("*.jpg").Length
@@ -60,6 +65,19 @@ let rec image_loader () =
                 img.Value <- img_dir.GetFiles((i+1).ToString()+".jpg")
             else
                 img.Value <- img_dir.GetFiles((i+1).ToString()+"_one.jpg")
+            let fullname = img.Value.[0].FullName
+            let image = Image.FromFile(fullname)
+            images.Value <- (List.append images.Value [image])
+        images.Value
+    else if img_dir_release.Exists then
+        let cnt = img_dir_release.GetFiles("*.jpg").Length
+        let images = ref ([] : Image list)
+        for i=0 to cnt-1 do
+            let img = ref ([| |] : FileInfo array)
+            if (img_dir_release.GetFiles((i+1).ToString()+".jpg").Length <> 0) then
+                img.Value <- img_dir_release.GetFiles((i+1).ToString()+".jpg")
+            else
+                img.Value <- img_dir_release.GetFiles((i+1).ToString()+"_one.jpg")
             let fullname = img.Value.[0].FullName
             let image = Image.FromFile(fullname)
             images.Value <- (List.append images.Value [image])

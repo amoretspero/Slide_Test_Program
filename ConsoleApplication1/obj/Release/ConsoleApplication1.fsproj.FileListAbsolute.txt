@@ -7,3 +7,11 @@ D:\3학년_1학기_HW\Oriental_Arts_and_Civilizations_001\Slide_Test_Program\Con
 D:\3학년_1학기_HW\Oriental_Arts_and_Civilizations_001\Slide_Test_Program\ConsoleApplication1\bin\Release\ko\FSharp.Core.resources.dll
 D:\3학년_1학기_HW\Oriental_Arts_and_Civilizations_001\Slide_Test_Program\ConsoleApplication1\obj\Release\ConsoleApplication1.exe
 D:\3학년_1학기_HW\Oriental_Arts_and_Civilizations_001\Slide_Test_Program\ConsoleApplication1\obj\Release\ConsoleApplication1.pdb
+D:\2015_Spring\Oriental_Art_and_Civilizations_001\Exam_Program\ConsoleApplication1\bin\Release\ConsoleApplication1.exe.config
+D:\2015_Spring\Oriental_Art_and_Civilizations_001\Exam_Program\ConsoleApplication1\bin\Release\ConsoleApplication1.XML
+D:\2015_Spring\Oriental_Art_and_Civilizations_001\Exam_Program\ConsoleApplication1\bin\Release\ConsoleApplication1.exe
+D:\2015_Spring\Oriental_Art_and_Civilizations_001\Exam_Program\ConsoleApplication1\bin\Release\ConsoleApplication1.pdb
+D:\2015_Spring\Oriental_Art_and_Civilizations_001\Exam_Program\ConsoleApplication1\bin\Release\FSharp.Core.dll
+D:\2015_Spring\Oriental_Art_and_Civilizations_001\Exam_Program\ConsoleApplication1\bin\Release\FSharp.Core.xml
+D:\2015_Spring\Oriental_Art_and_Civilizations_001\Exam_Program\ConsoleApplication1\obj\Release\ConsoleApplication1.exe
+D:\2015_Spring\Oriental_Art_and_Civilizations_001\Exam_Program\ConsoleApplication1\obj\Release\ConsoleApplication1.pdb
