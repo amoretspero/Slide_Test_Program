@@ -2,6 +2,40 @@
 <doc>
 <assembly><name>ConsoleApplication1</name></assembly>
 <members>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:File1.point_list_for_one">
+<summary>
+ Event handlers.
+ Setting KeyPreview option of form to catch key press events before they are sent to focused controls.
+ Key pressing combinations. Ctrl + (-&gt; or L) : next image, Ctrl + (&lt;- or J) : prev image, Ctrl + S : Start, Shift + Esc : Close, Ctrl + I : Show answer, Ctrl + J : Hide answer.
+</summary>
+</member>
 <member name="P:File1.answers">
 <summary>
  Get answers in form of list.
@@ -15,7 +49,7 @@
  Image counter
 </summary>
 </member>
-<member name="P:File1.random_list_for_images">
+<member name="P:File1.plural_random_list_for_images">
 <summary>
  Generate random list for images.
 </summary>
@@ -23,7 +57,7 @@
 <member name="">
 
 </member>
-<member name="P:File1.images">
+<member name="P:File1.plural_images">
 <summary>
  Imaged loaded from specified folder. Only finds images with format JPEG(.jpg)
 </summary>
@@ -190,9 +224,23 @@
  remove_image_in_form : given form, find controls that have name of &quot;image_box&quot;(added to controls at show_image_in_form function) and remove them all. Return given form with image_boxes removed.
 </summary>
 </member>
+<member name="">
+
+</member>
 <member name="M:Image_functions.show_image_in_form(System.Drawing.Point,System.Int32,System.Int32,System.Drawing.Image,System.Windows.Forms.Form)">
 <summary>
  show_image_in_form : given center point that image to be displayed, boundary(in width, height), img, form, this function will return form that given image is displayed.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Image_functions.get_plural_images">
+<summary>
+ When called, returns int list list, whose each element is [image_number; image_count].
 </summary>
 </member>
 <member name="">

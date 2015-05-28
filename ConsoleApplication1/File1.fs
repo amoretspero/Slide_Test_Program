@@ -41,15 +41,15 @@ let label_remaining_slide_count = new Label(Text = "N/A", Width = 100, Height = 
 
 
 /// Buttons - Must include : Text, Width, Height, Location, Font
-let button_close = new Button(Text = "Close", Width = 70, Height = 25, Location = new Point(950, 25), Font = font_label)
-let button_next_image = new Button(Text = "Next Image", Width = 120, Height = 25, Location = new Point(620, 550), Font = font_label, Enabled = false)
-let button_previous_image = new Button(Text = "Prev Image", Width = 120, Height = 25, Location = new Point(480, 550), Font = font_label, Enabled = false)
+let button_close = new Button(Text = "Close", Width = 70, Height = 25, Location = new Point(950, 15), Font = font_label)
+let button_next_image = new Button(Text = "Next Image", Width = 120, Height = 25, Location = new Point(520, 550), Font = font_label, Enabled = false)
+let button_previous_image = new Button(Text = "Prev Image", Width = 120, Height = 25, Location = new Point(380, 550), Font = font_label, Enabled = false)
 let button_answer_submit = new Button(Text = "Submit", Width = 80, Height = 25, Location = new Point(1000, 600), Font = font_label, Enabled = false)
-let button_reset_random_list = new Button(Text = "Random Order Reset", Width = 170, Height = 25, Location = new Point(1050, 25), Font = font_label)
-let button_start = new Button(Text = "Test Start", Width = 120, Height = 25, Location = new Point(800, 25), Font = font_label)
-let button_show_answer = new Button(Text = "정답 보기", Width = 120, Height = 25, Location = new Point(60, 540), Font = font_label, Enabled = false)
-let button_hide_answer = new Button(Text = "정답 가리기", Width = 120, Height = 25, Location = new Point(60, 570), Font = font_label, Enabled = false)
-let button_unset_random = new Button(Text = "Unset Random", Width = 120, Height = 20, Location = new Point(1050, 60), Font = font_text)
+let button_reset_random_list = new Button(Text = "Random Order Reset", Width = 170, Height = 25, Location = new Point(1050, 15), Font = font_label)
+let button_start = new Button(Text = "Test Start", Width = 120, Height = 25, Location = new Point(800, 15), Font = font_label)
+let button_show_answer = new Button(Text = "정답 보기", Width = 120, Height = 25, Location = new Point(60, 600), Font = font_label, Enabled = false)
+let button_hide_answer = new Button(Text = "정답 가리기", Width = 120, Height = 25, Location = new Point(60, 630), Font = font_label, Enabled = false)
+let button_unset_random = new Button(Text = "Unset Random", Width = 120, Height = 20, Location = new Point(1050, 50), Font = font_text)
 
 /// Text boxes - Must include : Text, Width, Height, Location, Font
 let textbox_answer_name = new TextBox(Text = "", Width = 120, Height = 25, Location = new Point(180, 645), Font = font_text, Enabled = false)
@@ -57,7 +57,7 @@ let textbox_answer_founded_monument = new TextBox(Text = "", Width = 120, Height
 let textbox_answer_time = new TextBox(Text = "", Width = 120, Height = 25, Location = new Point(610, 645), Font = font_text, Enabled = false)
 let textbox_answer_founded_place = new TextBox(Text = "", Width = 120, Height = 25, Location = new Point(840, 645), Font = font_text, Enabled = false)
 let textbox_answer_artist = new TextBox(Text = "", Width = 120, Height = 25, Location = new Point(1030, 645), Font = font_text, Enabled = false)
-let textbox_answer_total = new RichTextBox(Text = "", Width = 240, Height = 480, Location = new Point(20, 40), Font = font_text, BorderStyle = BorderStyle.FixedSingle, Enabled = true)
+let textbox_answer_total = new RichTextBox(Text = "", Width = 720, Height = 60, Location = new Point(220, 600), Font = font_text, BorderStyle = BorderStyle.FixedSingle, Enabled = true)
 
 /// Check boxes - Must include : Location
 let checkbox_show_answer_always = new CheckBox(Location = new Point(1175, 100))
@@ -93,11 +93,14 @@ let rec form_control_remover (f : Form) (lst : Control list) =
         (form_control_remover f t)
 
 /// Imaged loaded from specified folder. Only finds images with format JPEG(.jpg)
-let images = image_loader()
-let images_count = image_counter()
+//let images = image_loader()
+//let images_count = image_counter()
+let plural_images = get_plural_images()
+let plural_images_count = plural_images.Length
 
 /// Generate random list for images.
-let random_list_for_images = ref (random_list_gen images_count [] [0 .. (images_count - 1)])
+//let random_list_for_images = ref (random_list_gen images_count [] [0 .. (images_count - 1)])
+let plural_random_list_for_images = ref (random_list_gen plural_images_count [] [0 .. (plural_images_count - 1)])
 
 /// Image counter
 let mutable image_counter = 0
@@ -141,11 +144,19 @@ form_slide_test.KeyDown.Add(fun e ->
         button_unset_random.PerformClick()
         )
 
+        
+
 button_start.Click.Add(fun _ ->
     textbox_answer_total.Text <- ""
     if (image_counter = 0) then
-        let image_num = random_list_for_images.Value.[0]
-        (show_image_in_form (new Point(640, 300)) 640 480 (images.ElementAt(image_num)) form_slide_test) |> ignore
+        //let image_num = random_list_for_images.Value.[0]
+        let image_num = plural_random_list_for_images.Value.[0]
+        let plural_info = plural_images.[image_num]
+        let real_image_num = plural_info.[0]
+        let real_image_cnt = plural_info.[1]
+        let images = get_images real_image_num real_image_cnt
+        //(show_image_in_form (new Point(640, 300)) 640 480 (images.ElementAt(image_num)) form_slide_test) |> ignore
+        show_image_in_form_plural_gen real_image_cnt images form_slide_test
         button_next_image.Enabled <- true
         button_previous_image.Enabled <- true
         button_previous_image.PerformClick()
@@ -157,33 +168,45 @@ button_start.Click.Add(fun _ ->
         button_start.PerformClick()
     if (checkbox_show_answer_always.Checked) then
         button_show_answer.PerformClick()
-    label_remaining_slide_count.Text <- (image_counter+1).ToString()+" / "+(images_count).ToString())
+    label_remaining_slide_count.Text <- (image_counter+1).ToString()+" / "+(plural_images_count).ToString())
 
 button_next_image.Click.Add(fun _ ->
     image_counter <- image_counter + 1
     textbox_answer_total.Text <- ""
-    if (image_counter < images_count) then
-        let image_num = random_list_for_images.Value.[image_counter]
+    if (image_counter < plural_images_count) then
+        //let image_num = random_list_for_images.Value.[image_counter]
+        let image_num = plural_random_list_for_images.Value.[image_counter]
+        let plural_info = plural_images.[image_num]
+        let real_image_num = plural_info.[0]
+        let real_image_cnt = plural_info.[1]
+        let images = get_images real_image_num real_image_cnt
         (remove_image_in_form form_slide_test) |> ignore
-        (show_image_in_form (new Point(640, 300)) 640 480 (images.ElementAt(image_num)) form_slide_test) |> ignore
+        //(show_image_in_form (new Point(640, 300)) 640 480 (images.ElementAt(image_num)) form_slide_test) |> ignore
+        show_image_in_form_plural_gen real_image_cnt images form_slide_test
         image_number <- image_num
-    if (image_counter = images_count-1) then
+    if (image_counter = plural_images_count-1) then
         button_next_image.Enabled <- false
-    if ((image_counter < images_count - 1) && (button_next_image.Enabled = false)) then
+    if ((image_counter < plural_images_count - 1) && (button_next_image.Enabled = false)) then
         button_next_image.Enabled <- true
     if (image_counter = 1) then
         button_previous_image.Enabled <- true
     if (checkbox_show_answer_always.Checked) then
         button_show_answer.PerformClick()
-    label_remaining_slide_count.Text <- (image_counter+1).ToString()+" / "+(images_count).ToString())
+    label_remaining_slide_count.Text <- (image_counter+1).ToString()+" / "+(plural_images_count).ToString())
 
 button_previous_image.Click.Add(fun _ ->
     image_counter <- image_counter - 1
     textbox_answer_total.Text <- ""
     if (image_counter >= 0) then
-        let image_num = random_list_for_images.Value.[image_counter]
+        //let image_num = random_list_for_images.Value.[image_counter]
+        let image_num = plural_random_list_for_images.Value.[image_counter]
+        let plural_info = plural_images.[image_num]
+        let real_image_num = plural_info.[0]
+        let real_image_cnt = plural_info.[1]
+        let images = get_images real_image_num real_image_cnt
         (remove_image_in_form form_slide_test) |> ignore
-        (show_image_in_form (new Point(640, 300)) 640 480 (images.ElementAt(image_num)) form_slide_test) |> ignore
+        //(show_image_in_form (new Point(640, 300)) 640 480 (images.ElementAt(image_num)) form_slide_test) |> ignore
+        show_image_in_form_plural_gen real_image_cnt images form_slide_test
         image_number <- image_num
     else
         image_counter <- 0
@@ -191,15 +214,16 @@ button_previous_image.Click.Add(fun _ ->
         button_previous_image.Enabled <- false
     if ((image_counter > 0) && (button_previous_image.Enabled = false)) then
         button_previous_image.Enabled <- true
-    if (image_counter = images_count - 2) then
+    if (image_counter = plural_images_count - 2) then
         button_next_image.Enabled <- true
     if (checkbox_show_answer_always.Checked) then
         button_show_answer.PerformClick()
-    label_remaining_slide_count.Text <- (image_counter+1).ToString()+" / "+(images_count).ToString())
+    label_remaining_slide_count.Text <- (image_counter+1).ToString()+" / "+(plural_images_count).ToString())
 
 button_reset_random_list.Click.Add(fun _ ->
     textbox_answer_total.Text <- ""
-    random_list_for_images.Value <- (random_list_gen images_count [] [0 .. (images_count - 1)])
+    //random_list_for_images.Value <- (random_list_gen images_count [] [0 .. (images_count - 1)])
+    plural_random_list_for_images.Value <- (random_list_gen plural_images_count [] [0 .. (plural_images_count - 1)])
     (remove_image_in_form form_slide_test) |> ignore
     image_counter <- 0
     button_next_image.Enabled <- false
@@ -210,7 +234,8 @@ button_reset_random_list.Click.Add(fun _ ->
 
 button_unset_random.Click.Add(fun _ ->
     textbox_answer_total.Text <- ""
-    random_list_for_images.Value <- [0 .. (images_count-1)]
+    //random_list_for_images.Value <- [0 .. (images_count-1)]
+    plural_random_list_for_images.Value <- [0 .. (plural_images_count-1)]
     (remove_image_in_form form_slide_test) |> ignore
     image_counter <- 0
     button_next_image.Enabled <- false
@@ -244,7 +269,7 @@ form_slide_test.KeyDown.Add(fun arg ->
 
 
 /// Add controls to form.
-(form_control_adder form_slide_test [label_image; label_show_answer_always; label_show_help;
+(form_control_adder form_slide_test [(*label_image;*) label_show_answer_always; label_show_help;
                                     label_remaining_slide; label_remaining_slide_count]) |> ignore
 (form_control_adder form_slide_test [button_close; button_next_image; button_previous_image; button_reset_random_list; button_start; button_show_answer; button_hide_answer;
                                     button_unset_random]) |> ignore
