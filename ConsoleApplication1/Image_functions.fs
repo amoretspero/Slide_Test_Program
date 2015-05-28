@@ -40,8 +40,8 @@ let image_resizer (img : Image) (size : Size) (preserveAspectRatio : bool) =
     newimg
 
 let rec image_counter () =
-    let img_dir = new DirectoryInfo(@"..\..\..\images")
-    let img_dir_release = new DirectoryInfo(@".\Images")
+    let img_dir = new DirectoryInfo(@"..\..\..\Slide_Test_Program_Images")
+    let img_dir_release = new DirectoryInfo(@".\Slide_Test_Program_Images")
     if img_dir.Exists then
         let cnt = img_dir.GetFiles("*.jpg").Length
         cnt
@@ -69,8 +69,8 @@ let sort_img (img1 : FileInfo) (img2 : FileInfo) =
 
 /// When called, returns int list list, whose each element is [image_number; image_count].
 let rec get_plural_images () =
-    let img_dir = new DirectoryInfo(@"../../../images")
-    let img_dir_release = new DirectoryInfo(@"./Images")
+    let img_dir = new DirectoryInfo(@"../../../Slide_Test_Program_Images")
+    let img_dir_release = new DirectoryInfo(@"./Slide_Test_Program_Images")
     if img_dir.Exists then
         let cnt_all = img_dir.GetFiles("*.jpg").Length
         let images_unsorted = img_dir.GetFiles("*.jpg")
@@ -97,31 +97,77 @@ let rec get_plural_images () =
                 img_per_realnum <- 1
         real_num_list.Value <- List.append (real_num_list.Value) [[prev_real_num; img_per_realnum]]
         real_num_list.Value
+    else if img_dir_release.Exists then
+        let cnt_all = img_dir_release.GetFiles("*.jpg").Length
+        let images_unsorted = img_dir_release.GetFiles("*.jpg")
+        let images = List.sortWith (fun img1 img2 -> sort_img img1 img2) (Array.toList(images_unsorted))
+        let real_num_list = ref ([] : int list list)
+        let mutable img_per_realnum = 0
+        let mutable prev_real_num = -1
+        let mutable real_num = -1
+        for i=0 to cnt_all-1 do
+            prev_real_num <- real_num
+            let img = images.[i]
+            if img.Name.Contains("-") then
+                real_num <- Convert.ToInt32(img.Name.Substring(0, img.Name.IndexOf("-")))
+                if real_num <> prev_real_num then
+                    if (prev_real_num > 0) then
+                        real_num_list.Value <- List.append (real_num_list.Value) [[prev_real_num; img_per_realnum]]
+                    img_per_realnum <- 1
+                else
+                    img_per_realnum <- img_per_realnum + 1
+            else
+                if prev_real_num > 0 then
+                    real_num_list.Value <- List.append (real_num_list.Value) [[prev_real_num; img_per_realnum]]
+                real_num <- Convert.ToInt32(img.Name.Substring(0, img.Name.IndexOf(".")))
+                img_per_realnum <- 1
+        real_num_list.Value <- List.append (real_num_list.Value) [[prev_real_num; img_per_realnum]]
+        real_num_list.Value
     else
         ([] : int list list)
 
+/// get_images : When called with parameters, returns list of images that contains primary number which equals with real_num.
 let rec get_images (real_num : int) (count : int) =
-    if (count = 1) then
-        let img_dir = new DirectoryInfo(@"../../../Images")
-        let images = ref ([] : Image list)
-        let img = img_dir.GetFiles(real_num.ToString()+".jpg")
-        let fullname = img.[0].FullName
-        let image = Image.FromFile(fullname)
-        images.Value <- (List.append images.Value [image])
-        images.Value
-    else
-        let img_dir = new DirectoryInfo(@"../../../Images")
-        let images = ref ([] : Image list)
-        for i=1 to count do
-            let img = img_dir.GetFiles(real_num.ToString()+"-"+i.ToString()+".jpg")
+    let img_dir = new DirectoryInfo(@"../../../Slide_Test_Program_Images")
+    let img_dir_release = new DirectoryInfo(@"./Slide_Test_Program_Images")
+    if img_dir.Exists then
+        if (count = 1) then
+            let images = ref ([] : Image list)
+            let img = img_dir.GetFiles(real_num.ToString()+".jpg")
             let fullname = img.[0].FullName
             let image = Image.FromFile(fullname)
             images.Value <- (List.append images.Value [image])
-        images.Value
+            images.Value
+        else
+            let images = ref ([] : Image list)
+            for i=1 to count do
+                let img = img_dir.GetFiles(real_num.ToString()+"-"+i.ToString()+".jpg")
+                let fullname = img.[0].FullName
+                let image = Image.FromFile(fullname)
+                images.Value <- (List.append images.Value [image])
+            images.Value
+    else if img_dir_release.Exists then
+        if (count = 1) then
+            let images = ref ([] : Image list)
+            let img = img_dir_release.GetFiles(real_num.ToString()+".jpg")
+            let fullname = img.[0].FullName
+            let image = Image.FromFile(fullname)
+            images.Value <- (List.append images.Value [image])
+            images.Value
+        else
+            let images = ref ([] : Image list)
+            for i=1 to count do
+                let img = img_dir_release.GetFiles(real_num.ToString()+"-"+i.ToString()+".jpg")
+                let fullname = img.[0].FullName
+                let image = Image.FromFile(fullname)
+                images.Value <- (List.append images.Value [image])
+            images.Value
+    else
+        ([] : Image list)
 
 let rec image_loader () =
-    let img_dir = new DirectoryInfo(@"..\..\..\images")
-    let img_dir_release = new DirectoryInfo(@".\Images")
+    let img_dir = new DirectoryInfo(@"..\..\..\Slide_Test_Program_Images")
+    let img_dir_release = new DirectoryInfo(@".\Slide_Test_Program_Images")
     let img_cnt = image_counter()
     if img_dir.Exists then
         let cnt = img_dir.GetFiles("*.jpg").Length
@@ -189,7 +235,7 @@ let boundary_width_for_one = 640
 let boundary_height_for_one = 480
 let point_list_for_two = [(new Point(300, 300)); (new Point(700, 300))]
 let point_list_for_two_vertical = [(new Point(500, 200)); (new Point(500, 400))]
-let boundary_width_for_two = 500
+let boundary_width_for_two = 400
 let boundary_height_for_two = 500
 let boundary_width_for_two_vertical = 600
 let boundary_height_for_two_vertical = 200

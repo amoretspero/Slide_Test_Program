@@ -2,40 +2,6 @@
 <doc>
 <assembly><name>ConsoleApplication1</name></assembly>
 <members>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="P:File1.point_list_for_one">
-<summary>
- Event handlers.
- Setting KeyPreview option of form to catch key press events before they are sent to focused controls.
- Key pressing combinations. Ctrl + (-&gt; or L) : next image, Ctrl + (&lt;- or J) : prev image, Ctrl + S : Start, Shift + Esc : Close, Ctrl + I : Show answer, Ctrl + J : Hide answer.
-</summary>
-</member>
 <member name="P:File1.answers">
 <summary>
  Get answers in form of list.
@@ -219,6 +185,56 @@
 <member name="T:File1">
 
 </member>
+<member name="M:Image_functions.show_image_in_form_plural_gen(System.Int32,Microsoft.FSharp.Collections.FSharpList{System.Drawing.Image},System.Windows.Forms.Form)">
+<summary>
+ show_image_in_form_plural_gen : given number of images, list of images, appropriate form, show that images in given form with horizental or vertical position.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="M:Image_functions.remove_image_in_form(System.Windows.Forms.Form)">
 <summary>
  remove_image_in_form : given form, find controls that have name of &quot;image_box&quot;(added to controls at show_image_in_form function) and remove them all. Return given form with image_boxes removed.
@@ -235,8 +251,10 @@
 <member name="">
 
 </member>
-<member name="">
-
+<member name="M:Image_functions.get_images(System.Int32,System.Int32)">
+<summary>
+ get_images : When called with parameters, returns list of images that contains primary number which equals with real_num.
+</summary>
 </member>
 <member name="M:Image_functions.get_plural_images">
 <summary>

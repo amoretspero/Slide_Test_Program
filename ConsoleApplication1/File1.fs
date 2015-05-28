@@ -164,6 +164,7 @@ button_start.Click.Add(fun _ ->
         button_hide_answer.Enabled <- true
         image_number <- image_num
     else
+        remove_image_in_form form_slide_test |> ignore
         image_counter <- 0
         button_start.PerformClick()
     if (checkbox_show_answer_always.Checked) then

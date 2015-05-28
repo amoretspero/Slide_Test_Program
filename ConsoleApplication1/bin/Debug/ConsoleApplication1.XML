@@ -251,8 +251,10 @@
 <member name="">
 
 </member>
-<member name="">
-
+<member name="M:Image_functions.get_images(System.Int32,System.Int32)">
+<summary>
+ get_images : When called with parameters, returns list of images that contains primary number which equals with real_num.
+</summary>
 </member>
 <member name="M:Image_functions.get_plural_images">
 <summary>
